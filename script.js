@@ -1,6 +1,25 @@
-// === Анимации при скролле ===
-const fadeIns = document.querySelectorAll('.fade-in');
+// === Переключение темы (тёмная/светлая) ===
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
 
+// Проверяем сохранённую тему
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+  body.classList.add('dark-mode');
+}
+
+// Клик по кнопке переключает тему
+themeToggle.addEventListener('click', () => {
+  body.classList.toggle('dark-mode');
+  if (body.classList.contains('dark-mode')) {
+    localStorage.setItem('theme', 'dark');
+  } else {
+    localStorage.setItem('theme', 'light');
+  }
+});
+
+// === Плавное появление секций при скролле ===
+const fadeIns = document.querySelectorAll('.fade-in');
 window.addEventListener('scroll', () => {
   fadeIns.forEach(el => {
     const top = el.getBoundingClientRect().top;
@@ -9,10 +28,23 @@ window.addEventListener('scroll', () => {
     }
   });
 });
-window.dispatchEvent(new Event('scroll')); // Срабатывает при загрузке
+window.dispatchEvent(new Event('scroll'));
 
-// === Переключение темы ===
-const themeToggle = document.getElementById('theme-toggle');
-themeToggle.addEventListener('click', () => {
-  document.body.classList.toggle('dark');
+
+// === Кнопка "вверх" ===
+const toTopBtn = document.getElementById('toTopBtn');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 300) {
+    toTopBtn.style.display = 'block';
+  } else {
+    toTopBtn.style.display = 'none';
+  }
+});
+
+toTopBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 });
