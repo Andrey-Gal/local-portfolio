@@ -1,1 +1,120 @@
-body { font-family: sans-serif; margin: 2rem; background: #f2f2f2; }
+/* === Сброс отступов и поведение блоков === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 18px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f2f2f2;
+  color: #222;
+  line-height: 1.6;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* === Навигационная панель === */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 1rem 2rem;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+}
+
+.navbar h1 {
+  font-size: 1.8rem;
+  color: #111;
+  margin-right: auto;
+  white-space: nowrap;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  justify-content: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #007acc;
+  font-weight: bold;
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.3rem;
+  border-radius: 0.5rem;
+  transition: background 0.3s;
+  margin-left: auto;
+}
+
+#theme-toggle:hover {
+  background-color: #ddd;
+}
+
+/* === Основные секции === */
+section {
+  padding: 3rem 1rem;
+  max-width: 800px;
+  margin: auto;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  color: #111;
+  font-size: 1.8rem;
+}
+
+p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+/* === Анимации при прокрутке === */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-in-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* === Тёмная тема === */
+body.dark {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark .navbar {
+  background-color: #1e1e1e;
+  border-bottom: 1px solid #444;
+}
+
+body.dark .nav-links a {
+  color: #80d4ff;
+}
+
+body.dark #theme-toggle:hover {
+  background-color: #333;
+}
