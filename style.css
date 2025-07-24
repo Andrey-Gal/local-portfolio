@@ -139,3 +139,16 @@ body.dark-mode #toTopBtn {
 body.dark-mode #toTopBtn:hover {
   background-color: #666;
 }
+
+.about-photo {
+  max-width: 200px;
+  width: 100%;
+  border-radius: 12px;
+  margin: 20px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.about-photo:hover {
+  transform: scale(1.05);
+}
