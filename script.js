@@ -48,3 +48,30 @@ toTopBtn.addEventListener('click', () => {
     behavior: 'smooth'
   });
 });
+
+// === Подсветка активного пункта меню ===
+const sections = document.querySelectorAll('main section[id]');
+const menuLinks = document.querySelectorAll('.nav-links a');
+
+const linkById = new Map(
+  [...menuLinks].map(a => [a.getAttribute('href').slice(1), a])
+);
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const id = entry.target.id;
+    const link = linkById.get(id);
+    if (!link) return;
+
+    if (entry.isIntersecting) {
+      menuLinks.forEach(a => a.classList.remove('active'));
+      link.classList.add('active');
+      history.replaceState(null, '', `#${id}`); // обновляет URL без прыжка
+    }
+  });
+}, {
+  rootMargin: '-40% 0px -50% 0px', // середина экрана = «активная секция»
+  threshold: 0
+});
+
+sections.forEach(sec => observer.observe(sec));

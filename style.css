@@ -1,3 +1,28 @@
+:root {
+  --bg: #fff;
+  --text: #111;
+  --accent: #0095ff;
+  --accent-hover: #0077cc;
+  --border: #ccc;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.nav-links a { color: var(--accent); }
+.nav-links a:hover { color: var(--accent-hover); }
+header { border-bottom: 1px solid var(--border); }
+
+body.dark-mode {
+  --bg: #111;
+  --text: #f0f0f0;
+  --accent: #66b3ff;
+  --accent-hover: #88ccff;
+  --border: #555;
+}
+
 /* === Общие стили === */
 body {
   margin: 0;
@@ -8,11 +33,13 @@ body {
 }
 
 header {
-  background-color: #fff;
-  padding: 20px;
-  text-align: center;
-  border-bottom: 1px solid #ccc;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: inherit; /* чтобы тема подтягивалась */
+  backdrop-filter: saturate(1.2) blur(6px); /* приятная подложка (поддерживается не везде) */
 }
+
 
 .navbar {
   display: flex;
@@ -151,4 +178,20 @@ body.dark-mode #toTopBtn:hover {
 
 .about-photo:hover {
   transform: scale(1.05);
+}
+
+/* Плавный скролл по якорям */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Подсветка активного пункта */
+.nav-links a.active {
+  color: #ff7a00;
+  text-decoration: underline;
+}
+
+/* Чтобы якорь не уезжал под фикс-хедер */
+section {
+  scroll-margin-top: 80px; /* подстраховка, если сделаем header sticky */
 }
