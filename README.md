@@ -53,3 +53,10 @@
 - Email: [andreygalkin85@gmail.com](mailto:andreygalkin85@gmail.com)  
 - GitHub: [Andrey-Gal](https://github.com/Andrey-Gal)
 # Локальное портфолио
+
+---
+
+<!-- Футер-баннер -->
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0095ff&height=120&section=footer" alt="footer"/>
+</p>
