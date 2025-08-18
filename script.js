@@ -68,7 +68,7 @@ window.addEventListener('load', () => {
   }
 });
 
-// ===== ПЛАВНЫЕ ЯКОРЯ (подстраховка) =====
+// ===== ПЛАВНЫЕ ЯКОРЯ =====
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', (e) => {
     const id = a.getAttribute('href').slice(1);
