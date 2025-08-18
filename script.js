@@ -1,77 +1,80 @@
-// === Переключение темы (тёмная/светлая) ===
-const themeToggle = document.getElementById('theme-toggle');
+// ===== ТЕМА =====
 const body = document.body;
-
-// Проверяем сохранённую тему
+const themeToggle = document.getElementById('theme-toggle');
 const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark') {
-  body.classList.add('dark-mode');
-}
+if (savedTheme === 'dark') body.classList.add('dark-mode');
 
-// Клик по кнопке переключает тему
-themeToggle.addEventListener('click', () => {
+themeToggle?.addEventListener('click', () => {
   body.classList.toggle('dark-mode');
-  if (body.classList.contains('dark-mode')) {
-    localStorage.setItem('theme', 'dark');
-  } else {
-    localStorage.setItem('theme', 'light');
-  }
+  localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
 });
 
-// === Плавное появление секций при скролле ===
-const fadeIns = document.querySelectorAll('.fade-in');
-window.addEventListener('scroll', () => {
-  fadeIns.forEach(el => {
-    const top = el.getBoundingClientRect().top;
-    if (top < window.innerHeight - 100) {
-      el.classList.add('visible');
-    }
-  });
-});
-window.dispatchEvent(new Event('scroll'));
+// ===== ПЛАВНОЕ ПОЯВЛЕНИЕ СЕКЦИЙ =====
+const fades = document.querySelectorAll('.fade-in');
+const fadeObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+fades.forEach(el => fadeObs.observe(el));
 
-
-// === Кнопка "вверх" ===
+// ===== КНОПКА "ВВЕРХ" =====
 const toTopBtn = document.getElementById('toTopBtn');
-
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 300) {
-    toTopBtn.style.display = 'block';
-  } else {
-    toTopBtn.style.display = 'none';
+let ticking = false;
+function onScroll() {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      if (window.scrollY > 300) toTopBtn.classList.add('show');
+      else toTopBtn.classList.remove('show');
+      ticking = false;
+    });
+    ticking = true;
   }
-});
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
 
 toTopBtn.addEventListener('click', () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// === Подсветка активного пункта меню ===
+// ===== ПОДСВЕТКА АКТИВНОГО ПУНКТА МЕНЮ =====
 const sections = document.querySelectorAll('main section[id]');
 const menuLinks = document.querySelectorAll('.nav-links a');
+const linkById = new Map([...menuLinks].map(a => [a.getAttribute('href').slice(1), a]));
 
-const linkById = new Map(
-  [...menuLinks].map(a => [a.getAttribute('href').slice(1), a])
-);
+function setActive(id){
+  menuLinks.forEach(a => a.classList.remove('active'));
+  const link = linkById.get(id);
+  if (link) link.classList.add('active');
+  const targetHash = `#${id}`;
+  if (location.hash !== targetHash) history.replaceState(null, '', targetHash);
+}
 
-const observer = new IntersectionObserver((entries) => {
+const spy = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    const id = entry.target.id;
-    const link = linkById.get(id);
-    if (!link) return;
-
-    if (entry.isIntersecting) {
-      menuLinks.forEach(a => a.classList.remove('active'));
-      link.classList.add('active');
-      history.replaceState(null, '', `#${id}`); // обновляет URL без прыжка
-    }
+    if (entry.isIntersecting) setActive(entry.target.id);
   });
-}, {
-  rootMargin: '-40% 0px -50% 0px', // середина экрана = «активная секция»
-  threshold: 0
+}, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+
+sections.forEach(sec => spy.observe(sec));
+
+// Активный пункт на старте
+window.addEventListener('load', () => {
+  const hash = location.hash.replace('#','');
+  if (hash && linkById.has(hash)) {
+    setActive(hash);
+    document.getElementById(hash)?.scrollIntoView({ behavior: 'instant', block: 'start' });
+  } else if (sections[0]) {
+    setActive(sections[0].id);
+  }
 });
 
-sections.forEach(sec => observer.observe(sec));
+// ===== ПЛАВНЫЕ ЯКОРЯ (подстраховка) =====
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (!el) return;
+    e.preventDefault();
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
