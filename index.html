@@ -7,33 +7,23 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <body>
+  <!-- Полоса прогресса прокрутки -->
   <div id="scrollProgress" aria-hidden="true"></div>
-
-  <!-- ...твой контент... -->
-
-  <!-- Кнопка "Наверх" (если у тебя уже есть — оставь, только id совпадал) -->
-  <button id="toTopBtn" title="Наверх" aria-label="Наверх">↑</button>
-
-  <script src="script.js"></script>
-</body>
 
   <header>
     <nav class="navbar">
       <h1>Андрей &lt;/&gt;</h1>
-
       <ul class="nav-links">
         <li><a href="#about">Обо мне</a></li>
         <li><a href="#projects">Проекты</a></li>
         <li><a href="#contacts">Контакты</a></li>
       </ul>
-
       <button id="theme-toggle" aria-label="Переключить тему">🌙</button>
     </nav>
   </header>
 
   <main>
-    <section class="hero">
+    <section class="hero fade-in">
       <h2>Привет! Я Андрей</h2>
       <p>Это мой локальный проект для обучения фронтенду.</p>
     </section>
@@ -44,12 +34,9 @@
       <p>Я начинающий веб-разработчик. Учусь HTML, CSS и JavaScript, чтобы изменить свою жизнь и карьеру.</p>
     </section>
 
-    <!-- === ПРОЕКТЫ === -->
     <section id="projects" class="fade-in">
       <h2>Мои проекты</h2>
-
       <div class="projects-grid">
-        <!-- Popitka6 -->
         <article class="card">
           <div class="card-body">
             <h3 class="card-title">Popitka6 — песочница фронтенда>
@@ -58,12 +45,8 @@
             </p>
           </div>
           <div class="card-actions">
-            <a class="btn primary"
-               href="https://andrey-gal.github.io/popitka6/"
-               target="_blank" rel="noopener">Открыть проект</a>
-            <a class="btn"
-               href="https://github.com/Andrey-Gal/popitka6"
-               target="_blank" rel="noopener">Исходники</a>
+            <a class="btn primary" href="https://andrey-gal.github.io/popitka6/" target="_blank" rel="noopener">Открыть проект</a>
+            <a class="btn" href="https://github.com/Andrey-Gal/popitka6" target="_blank" rel="noopener">Исходники</a>
           </div>
         </article>
       </div>
@@ -75,8 +58,8 @@
     </section>
   </main>
 
-  <!-- Кнопка вверх -->
-  <button id="toTopBtn" title="Наверх" aria-label="Наверх">⬆</button>
+  <!-- ОДНА кнопка «Наверх» -->
+  <button id="toTopBtn" title="Наверх" aria-label="Наверх">↑</button>
 
   <script src="script.js"></script>
 </body>
