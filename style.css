@@ -194,3 +194,21 @@ body.dark-mode #toTopBtn:hover{background:#666}
   .nav-links a{font-size:.98rem}
   #theme-toggle{font-size:1.1rem; padding:6px 10px}
 }
+
+/* === Scroll progress + ToTop === */
+#scrollProgress{
+  position:fixed; top:0; left:0; height:4px; width:0;
+  background:linear-gradient(90deg,#00d2ff,#3a7bd5);
+  z-index:9999; transition:width .1s linear;
+}
+#toTopBtn{
+  position:fixed; right:20px; bottom:20px; width:44px; height:44px;
+  border:none; border-radius:999px; cursor:pointer;
+  background:#111; color:#fff; box-shadow:0 8px 20px rgba(0,0,0,.2);
+  opacity:0; transform:translateY(10px); pointer-events:none;
+  transition:opacity .2s, transform .2s, background .2s;
+}
+#toTopBtn.show{ opacity:1; transform:translateY(0); pointer-events:auto; }
+#toTopBtn:hover{ background:#333; }
+/* тёмная тема — если есть data-theme="dark" */
+[data-theme="dark"] #toTopBtn{ background:#222; }

@@ -78,3 +78,27 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
+
+// === Scroll progress + ToTop ===
+(() => {
+  const progress = document.getElementById('scrollProgress');
+  const toTopBtn = document.getElementById('toTopBtn');
+
+  const onScroll = () => {
+    const doc = document.documentElement;
+    const y = doc.scrollTop || document.body.scrollTop;
+    const h = (doc.scrollHeight - doc.clientHeight) || 1;
+    const pct = Math.max(0, Math.min(100, (y / h) * 100));
+    if (progress) progress.style.width = pct + '%';
+    if (toTopBtn) toTopBtn.classList.toggle('show', y > 400);
+  };
+
+  window.addEventListener('scroll', () => requestAnimationFrame(onScroll));
+  window.addEventListener('load', onScroll);
+
+  if (toTopBtn) {
+    toTopBtn.addEventListener('click', () =>
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    );
+  }
+})();
